@@ -1,0 +1,11 @@
+Unreal_files/Binaries
+Unreal_files/Build
+Unreal_files/DerivedDataCache
+Unreal_files/Intermediate
+Unreal_files/Saved
+*.sln
+*.sdf
+*.suo
+
+Unreal_files/Content/StarterContent/
+Unreal_files/.vs/
