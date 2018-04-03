@@ -28,6 +28,8 @@ protected:
 
 	void close_door();
 
+	float objectmass();
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -45,8 +47,4 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* trigger_obj = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	TArray<AActor*> actor;
-	
 };

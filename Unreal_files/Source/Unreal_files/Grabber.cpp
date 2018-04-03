@@ -18,8 +18,9 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
+	FindPhysicsHandleComponent();
+	FindBindInputComponent();
 
-	
 }
 
 
@@ -28,24 +29,81 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (ph->GetGrabbedComponent()) ph->SetTargetLocation(endSearching());
+}
+
+void UGrabber::Grab() {
+
+	auto hitresult = GetFirstPhisicsBodyInReach();
+	auto comptograb = hitresult.GetComponent();
+	auto actorHit = hitresult.GetActor();
+
+	if (actorHit) {
+		ph->GrabComponent(
+			comptograb,
+			NAME_None,
+			actorHit->GetActorLocation(),
+			true
+		);
+	}
+}
+
+void UGrabber::Release() {
+
+	ph->ReleaseComponent();
+}
+
+void UGrabber::FindPhysicsHandleComponent() {
+
+	ph = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+
+	if (ph != nullptr) UE_LOG(LogTemp, Warning, TEXT("%s lost UPhysicsHandleComponent"), *GetOwner()->GetName());
+}
+
+void UGrabber::FindBindInputComponent() {
+
+	in_comp = GetOwner()->FindComponentByClass<UInputComponent>();
+
+	if (in_comp) {
+		in_comp->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		in_comp->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	}
+	else UE_LOG(LogTemp, Warning, TEXT("%s lost UInputComponent"), *GetOwner()->GetName());
+}
+
+const FHitResult UGrabber::GetFirstPhisicsBodyInReach()
+{
+	FCollisionQueryParams trace_parm(FName(TEXT("")), false, GetOwner());
+	FHitResult out_hit;
+
+	bool hit_result = GetWorld()->LineTraceSingleByObjectType(
+		out_hit,
+		startSearching(),
+		endSearching(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		trace_parm
+	);
+
+	return out_hit;
+}
+
+const FVector UGrabber::endSearching() {
+
 	FVector out_location;
 	FRotator out_rotation;
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(out_location, out_rotation);
 
-	UE_LOG(LogTemp, Warning, TEXT("View at %s, rotations are %s"), *out_location.ToString(), *out_rotation.ToString());
+	return out_location + out_rotation.Vector() * ray_scale;
+}
 
-	FVector end_of_LT = out_location + out_rotation.Vector() * ray_scale;
+const FVector UGrabber::startSearching() {
 
-	DrawDebugLine(
-		GetWorld(),
-		out_location,
-		end_of_LT,
-		FColor(255, 0, 0),
-		false,
-		0.f,
-		0.f,
-		10
-	);
+	FVector out_location;
+	FRotator out_rotation;
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(out_location, out_rotation);
+
+	return out_location;
 }
 

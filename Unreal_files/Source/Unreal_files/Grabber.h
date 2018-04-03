@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Components/InputComponent.h"
 #include "Engine/World.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Math/Color.h"
 #include "DrawDebugHelpers.h"
 #include "Grabber.generated.h"
@@ -30,4 +32,14 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	float ray_scale = 1;
+	UPhysicsHandleComponent* ph = nullptr;
+	UInputComponent* in_comp = nullptr;
+
+	void Grab();
+	void Release();
+	void FindPhysicsHandleComponent();
+	void FindBindInputComponent();
+	const FHitResult GetFirstPhisicsBodyInReach();
+	const FVector endSearching();
+	const FVector startSearching();
 };

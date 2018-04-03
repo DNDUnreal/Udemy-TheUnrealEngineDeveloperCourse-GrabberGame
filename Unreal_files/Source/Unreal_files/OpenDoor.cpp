@@ -19,7 +19,6 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	actor[0] = GetWorld()->GetFirstPlayerController()->GetPawn();
 	owner = GetOwner();
 	owner_rot = owner->GetActorRotation();
 	
@@ -33,13 +32,10 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (trigger_obj) {
-		for (AActor* x : actor) {
-			if (trigger_obj->IsOverlappingActor(x)) {
+			if (objectmass() > 40) {
 				open_door();
 				last_open_time = GetWorld()->GetTimeSeconds();
-				break;
 			}
-		}
 	}
 
 	if (GetWorld()->GetTimeSeconds() >= (last_open_time + delay_time)) close_door();
@@ -56,3 +52,17 @@ void UOpenDoor::close_door()
 	owner->SetActorRelativeRotation(owner_rot);
 }
 
+float UOpenDoor::objectmass() {
+
+	float totalmass = 0.0f;
+
+	TArray<AActor*> over_geos;
+	trigger_obj->GetOverlappingActors(over_geos);
+
+	for (const auto& x : over_geos) {
+		totalmass += x->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+
+	}
+	
+	return totalmass;
+}
