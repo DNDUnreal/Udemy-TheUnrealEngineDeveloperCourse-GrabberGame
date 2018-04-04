@@ -29,7 +29,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (ph->GetGrabbedComponent()) ph->SetTargetLocation(endSearching());
+	if (ph && ph->GetGrabbedComponent()) ph->SetTargetLocation(endSearching());
 }
 
 void UGrabber::Grab() {
@@ -38,7 +38,7 @@ void UGrabber::Grab() {
 	auto comptograb = hitresult.GetComponent();
 	auto actorHit = hitresult.GetActor();
 
-	if (actorHit) {
+	if (actorHit && ph) {
 		ph->GrabComponent(
 			comptograb,
 			NAME_None,
@@ -50,14 +50,14 @@ void UGrabber::Grab() {
 
 void UGrabber::Release() {
 
-	ph->ReleaseComponent();
+	if (ph) ph->ReleaseComponent();
 }
 
 void UGrabber::FindPhysicsHandleComponent() {
 
 	ph = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
-	if (ph != nullptr) UE_LOG(LogTemp, Warning, TEXT("%s lost UPhysicsHandleComponent"), *GetOwner()->GetName());
+	if (ph == nullptr) UE_LOG(LogTemp, Warning, TEXT("%s lost UPhysicsHandleComponent"), *GetOwner()->GetName());
 }
 
 void UGrabber::FindBindInputComponent() {

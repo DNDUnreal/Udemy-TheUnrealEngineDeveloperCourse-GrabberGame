@@ -20,7 +20,7 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 
 	owner = GetOwner();
-	owner_rot = owner->GetActorRotation();
+	if(owner) owner_rot = owner->GetActorRotation();
 	
 }
 
@@ -43,13 +43,15 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 void UOpenDoor::open_door()
 {
-	FRotator open_rot = owner_rot + FRotator(0, open_angle, 0);
-	owner->SetActorRotation(open_rot);
+	/*FRotator open_rot = owner_rot + FRotator(0, open_angle, 0);
+	if(owner) owner->SetActorRotation(open_rot);*/
+
+	OnOpenRequest.Broadcast();
 }
 
 void UOpenDoor::close_door()
 {
-	owner->SetActorRelativeRotation(owner_rot);
+	if(owner) owner->SetActorRelativeRotation(owner_rot);
 }
 
 float UOpenDoor::objectmass() {
@@ -59,7 +61,7 @@ float UOpenDoor::objectmass() {
 	TArray<AActor*> over_geos;
 	trigger_obj->GetOverlappingActors(over_geos);
 
-	for (const auto& x : over_geos) {
+	for (auto& x : over_geos) {
 		totalmass += x->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 
 	}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Runtime/Core/Public/Delegates/Delegate.h"
 #include "Engine/World.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
@@ -10,6 +11,8 @@
 #include "Containers/Array.h"
 #include "OpenDoor.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCloseRequest);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREAL_FILES_API UOpenDoor : public UActorComponent
@@ -24,8 +27,6 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void open_door();
-
 	void close_door();
 
 	float objectmass();
@@ -34,16 +35,14 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnOpenRequest OnOpenRequest;
+
+	void open_door();
+
 private:
-	AActor * owner;
-	FRotator owner_rot;
+	AActor * owner = nullptr;
 	float last_open_time = 0;
-
-	UPROPERTY(EditAnywhere)
-	float open_angle = -45.0f;
-
-	UPROPERTY(EditAnywhere)
-	float delay_time = 1.0f;
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* trigger_obj = nullptr;
