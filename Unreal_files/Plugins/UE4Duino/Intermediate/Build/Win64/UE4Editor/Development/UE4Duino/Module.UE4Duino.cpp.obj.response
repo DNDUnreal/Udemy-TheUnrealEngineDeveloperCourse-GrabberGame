@@ -24,10 +24,10 @@
 /wd4838
 /w44668
 /I "C:\Program Files\Epic Games\UE_4.19\Engine\Source"
-/I D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Source\UE4Duino\Private
-/I D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Source
-/I D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Inc\UE4Duino
-/I D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Source\UE4Duino
+/I "D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Source\UE4Duino\Private"
+/I "D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Source"
+/I "D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Inc\UE4Duino"
+/I "D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Source\UE4Duino"
 /I "C:\Program Files\Epic Games\UE_4.19\Engine\Source\Runtime\Engine\Classes"
 /I "C:\Program Files\Epic Games\UE_4.19\Engine\Source\Runtime\Engine\Public"
 /I "C:\Program Files\Epic Games\UE_4.19\Engine\Source\Runtime\Engine\Public\AI"
@@ -365,9 +365,9 @@
 /FI"C:\Program Files\Epic Games\UE_4.19\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h"
 /Yu"C:\Program Files\Epic Games\UE_4.19\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h"
 /Fp"C:\Program Files\Epic Games\UE_4.19\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.pch"
-"D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Development\UE4Duino\Module.UE4Duino.cpp"
-/FI"D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Development\UE4Duino\Definitions.UE4Duino.h"
-/Fo"D:\MY\Unreal\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Development\UE4Duino\Module.UE4Duino.cpp.obj"
+"D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Development\UE4Duino\Module.UE4Duino.cpp"
+/FI"D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Development\UE4Duino\Definitions.UE4Duino.h"
+/Fo"D:\My\Unreal Projects\unreal_test\Unreal_files\Plugins\UE4Duino\Intermediate\Build\Win64\UE4Editor\Development\UE4Duino\Module.UE4Duino.cpp.obj"
 /TP
 /GR-
 /W4
